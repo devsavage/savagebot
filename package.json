@@ -1,0 +1,19 @@
+{
+  "name": "savagebot",
+  "version": "3.1.0",
+  "description": "A chat bot for twitch.tv built in node.js",
+  "license": "MIT",
+  "author": {
+    "name": "savageboy74"
+  },
+  "scripts": {
+    "start": "node ./src/savagebot.js"
+  },
+  "dependencies": {
+    "tmi.js": "~0.0.24",
+    "mysql": "~2.8.0",
+    "string": "~3.3.0",
+    "numeral": "~1.5.3",
+    "sprintf-js": "~1.0.3"
+  }
+}
