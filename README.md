@@ -1,7 +1,9 @@
 Savagebot
 =========
 
-Savagebot is a Twitch.tv chat moderation bot built in node.js
+Savagebot is a Twitch.tv chat moderation bot built in node.js  
+
+### This branch is stable. See the dev bracnh for the most up to date changes and fixes.  
 
 **Features:**
 
