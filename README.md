@@ -47,7 +47,7 @@ The config file you see me reference in some files...
 ---------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2015 savageboy74
+Copyright (c) 2016 savageboy74
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
