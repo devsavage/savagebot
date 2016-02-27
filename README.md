@@ -1,8 +1,8 @@
 Savagebot
 =========
 
-Wow another rewrite? Yeah, lol. This time I won't be trying to make another "moderation" bot but just build on them with some more features aside from moderation. 
-Oh yeah, I am also using ES6 so you will need to know how to use babel :)   
+Wow another rewrite? Yeah, lol. This time I won't be trying to make another "moderation" bot but just build on them with some more features aside from moderation.  
+Oh yeah, I am also using ES6 so you will need to know how to use babel :)  
 
 **Features:**
 
