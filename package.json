@@ -1,19 +1,33 @@
 {
   "name": "savagebot",
-  "version": "3.1.0",
-  "description": "A chat bot for twitch.tv built in node.js",
-  "license": "MIT",
-  "author": {
-    "name": "savageboy74"
-  },
+  "version": "5.0.0",
+  "description": "A Twitch chat bot with various features.",
+  "main": "src/bot.js",
   "scripts": {
-    "start": "node ./src/savagebot.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/savageboy74/savagebot.git"
+  },
+  "keywords": [
+    "savagebot"
+  ],
+  "author": "savageboy74",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/savageboy74/savagebot/issues"
+  },
+  "homepage": "https://github.com/savageboy74/savagebot#readme",
   "dependencies": {
-    "tmi.js": "~0.0.24",
-    "mysql": "~2.8.0",
-    "string": "~3.3.0",
-    "numeral": "~1.5.3",
-    "sprintf-js": "~1.0.3"
+    "mysql": "^2.10.2",
+    "numeral": "^1.5.3",
+    "request": "^2.69.0",
+    "string": "^3.3.1",
+    "tmi.js": "0.0.27",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.0.0"
   }
 }
