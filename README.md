@@ -1,89 +1,49 @@
 Savagebot
 =========
 
-Savagebot is a Twitch.tv chat moderation bot built in node.js  
-
-### This branch is stable. See the dev branch for the most up to date changes and fixes.  
+Wow another rewrite? Yeah, lol. This time I won't be trying to make another "moderation" bot but just build on them with some more features aside from moderation.  
 
 **Features:**
 
 - Point system w/ add and remove commands
 - Raffle system
-- Spotify system
-- Fun commands: !slap, !stab
-- Command system w/ add, remove and edit commands
-- Support for whispers
-
-**Planned Features:**
-- Better Structure
-- Poll System
-- Link and Emote Checks
-
-This repository is only meant to used as a reference. You may use any or all of the code provided in your project.
-
-You may see me call "config" for things like oauth token or database info. I have included that file below, update it to fit your needs.
+- Another cool thing... coming soon.........  
 
 ---------------------------------------------------------------
-**Basic Config File:**
+The config file you see me reference in some files...  
 
-~~~ javascript
-module.exports = {
-    oauth: function() {
-        return "oauth:YOUROAUTHTOKENHERE123";
+~~~ json
+{
+    "bot": {
+        "username": "savagebot",
+        "oauth": "oauth:******************************",
+        "defaults": {
+            "channel": "default_channel",
+            "group": "default_group_channel"
+        },
+
+        "settings": {
+            "debug": false,
+            "cluster": "main",
+            "blacklist": ["savagebot", "nightbot", "moobot", "xanbot"],
+            "allowJoinPoints": true,
+            "joinPoints": 3,
+            "followerJoinBonus": 2,
+            "allowChatPoints": true,
+            "chatPoints": 1,
+            "followerChatBonus": 2
+        }
     },
 
-    defaultChannel: function() {
-        return "DEFAULT_BOT_CHANNEL";
-    },
-
-    defaultGroupChannel: function() {
-        return "#DEFAULT_BOT_GROUP_CHANNEL";
-    },
-
-    host: function() {
-        return "DATABASE_HOST";
-    },
-
-    username: function() {
-        return "DATABASE_USERNAME";
-    },
-
-    password: function () {
-        return "DATABASE_PASSWORD";
-    },
-
-    database: function () {
-        return "DATABASE_TABLE";
-    },
-
-	//Set to true to enable the Spotify auto-play function
-    useSpoitfyHelper: function () {
-        return false;
-    },
-
-    joiningPoints: function() {
-        return 5;
-    },
-
-    chattingPoints: function() {
-        return 1;
+    "mysql": {
+        "host": "127.0.0.1",
+        "username": "root",
+        "password": "",
+        "database": "savagebot"
     }
-};
+}
 ~~~
-
 ---------------------------------------------------------------
-
-
-## Dependencies
-
-- [tmi.js](https://www.npmjs.com/package/tmi.js)
-- [string](https://www.npmjs.com/package/string)
-- [mysql](https://www.npmjs.com/package/mysql)
-- [numeral](https://www.npmjs.com/package/numeral)
-- [sprintf-js](https://www.npmjs.com/package/sprintf-js)
-
----------------------------------------------------------------
-
 The MIT License (MIT)
 
 Copyright (c) 2015 savageboy74
