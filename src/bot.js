@@ -6,9 +6,8 @@ var api = require('./lib/api.js');
 var c = require('./lib/commands.js');
 var db = require('./lib/database.js');
 var u = require('./lib/util.js');
-var config = require("../config/development.json");
-
-var followerList = __dirname + "../data/followers.json";
+var env = require("../config/environment.json");
+var config = require("../config/" + env.type + ".json");
 
 var options = {
     options: {
@@ -42,7 +41,10 @@ client.on("connected", function(address, port) {
 client.on("join", function(channel, username) {
     if(config.bot.settings.allowJoinPoints && !u.isBlacklisted(username)) {
         api.follows(username, function(err, res) {
-            if(res.status == 404) {
+            if(err)
+                console.log(err);
+
+            if(res.data.follow_date == null) {
                 db.addPoints(username, config.bot.settings.joinPoints, function(err, results) {
                     if(err)
                         u.log(channel, "error", err, true);
@@ -66,7 +68,7 @@ client.on("join", function(channel, username) {
 client.on("chat", function (channel, user, message, self) {
     if(config.bot.settings.allowChatPoints && !u.isBlacklisted(user.username)) {
         api.follows(user.username, function(err, res) {
-            if(res.status == 404) {
+            if(res.data.follow_date == null) {
                 db.addPoints(user.username, config.bot.settings.chatPoints, function(err, results) {
                     if(err)
                         u.log(channel, "error", err, true);
@@ -93,5 +95,5 @@ client.on("chat", function (channel, user, message, self) {
 });
 
 client.on("disconnected", function (reason) {
-    u.log(channel, "console", "Disconnected: " + reason, true);
+    u.log(null, "console", "Disconnected: " + reason, true);
 });

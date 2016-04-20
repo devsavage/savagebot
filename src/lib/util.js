@@ -1,8 +1,9 @@
 var util = require("util");
 var _ = require("underscore");
 var fs = require('fs');
-var config = require("../../config/development.json");
-var logFile = "../data/log.txt";
+var env = require("../../config/environment.json");
+var config = require("../../config/" + env.type + ".json");
+var logFile = "./data/log.txt";
 
 var isMod = function(user) {
     if(user["user-type"] != undefined && user["user-type"] === "mod")

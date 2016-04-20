@@ -1,5 +1,6 @@
 var mysql = require('mysql');
-var config = require("../../config/development.json");
+var env = require("../../config/environment.json");
+var config = require("../../config/" + env.type + ".json");
 
 var database = mysql.createPool({
     host: config.mysql.host,
