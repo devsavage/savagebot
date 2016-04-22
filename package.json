@@ -1,6 +1,6 @@
 {
   "name": "savagebot",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "A Twitch chat bot with various features.",
   "main": "src/bot.js",
   "scripts": {
@@ -25,7 +25,8 @@
     "request": "^2.69.0",
     "string": "^3.3.1",
     "tmi.js": "^0.0.29",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "node-datetime": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0"

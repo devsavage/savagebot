@@ -11,7 +11,7 @@ module.exports = {
         });
     },
 
-    follows: function(username, callback) {
+    stats: function(username, callback) {
         var url = "https://api.savageboy74.tv/v1/savagebot/user/" + username + "/stats";
 
         request(url, function(err, res, body) {
@@ -36,6 +36,16 @@ module.exports = {
 
     points: function(username, callback) {
         var url = "https://api.savageboy74.tv/v1/savagebot/user/" + username + "/points";
+
+        request(url, function(err, res, body) {
+            var parsedBody = JSON.parse(body);
+
+            callback(err, parsedBody);
+        })
+    },
+
+    verified: function(username, callback) {
+        var url = "https://api.savageboy74.tv/v1/savagebot/verify/" + username;
 
         request(url, function(err, res, body) {
             var parsedBody = JSON.parse(body);

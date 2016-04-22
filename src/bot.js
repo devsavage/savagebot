@@ -40,7 +40,7 @@ client.on("connected", function(address, port) {
 
 client.on("join", function(channel, username) {
     if(config.bot.settings.allowJoinPoints && !u.isBlacklisted(username)) {
-        api.follows(username, function(err, res) {
+        api.stats(username, function(err, res) {
             if(err)
                 console.log(err);
 
@@ -60,6 +60,20 @@ client.on("join", function(channel, username) {
                 });
             }
         });
+
+        api.verified(user.username, function(err, res) {
+            if(err)
+                throw err;
+
+            if(res.status == 200 && res.verified) {
+                db.addPoints(user.username, config.bot.settings.verifiedJoinBonus, function(err, results) {
+                    if(err)
+                        u.log(channel, "error", err, true);
+                    else
+                        u.log(channel, "event", u.format("Gave %s points for connecting with savageboy74.tv.", user.username), true);
+                });
+            }
+        });
     }
 
     u.log(channel, "join", username + " has joined " + channel, true);
@@ -67,7 +81,7 @@ client.on("join", function(channel, username) {
 
 client.on("chat", function (channel, user, message, self) {
     if(config.bot.settings.allowChatPoints && !u.isBlacklisted(user.username)) {
-        api.follows(user.username, function(err, res) {
+        api.stats(user.username, function(err, res) {
             if(res.data.follow_date == null) {
                 db.addPoints(user.username, config.bot.settings.chatPoints, function(err, results) {
                     if(err)
@@ -86,12 +100,26 @@ client.on("chat", function (channel, user, message, self) {
         });
     }
 
+    api.verified(user.username, function(err, res) {
+        if(err)
+            throw err;
+
+        if(res.status == 200 && res.verified && !u.isBlacklisted(user.username)) {
+            db.addPoints(user.username, config.bot.settings.verifiedChatBonus, function(err, results) {
+                if(err)
+                    u.log(channel, "error", err, true);
+                else
+                    u.log(channel, "event", u.format("Gave %s points for connecting with savageboy74.tv.", user.username), true);
+            });
+        }
+    });
+
     c.handleMessage(channel, user, message, function(response) {
         if(response != undefined)
             client.say(channel, response);
     });
 
-    u.log(channel, "chat", "(" + user.username + "): " + message, true);
+    u.log(channel, "chat", "<" + user.username + ">: " + message, true);
 });
 
 client.on("disconnected", function (reason) {

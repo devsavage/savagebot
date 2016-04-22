@@ -2,6 +2,7 @@ var S = require('string');
 var db = require("./database.js");
 var raffle = require("./raffle.js");
 var u = require("./util.js");
+var api = require('./api.js');
 
 module.exports = {
     handleMessage: function(channel, user, message, callback) {
@@ -69,6 +70,19 @@ module.exports = {
                 raffle.addUserToRaffle(user.username, function(message) {
                     if(message != null)
                         callback(message);
+                });
+                break;
+            case "followage":
+                api.stats(user.username, function(err, res) {
+                    if(err)
+                        throw err;
+
+                    if(res.status == 200 && res.data.follow_date != null) {
+                        console.log(res.data.follow_date);
+                        callback(u.format("%s", u.getFollowAge(user.username, res.data.follow_date)));
+                    } else if(res.data.follow_date == null) {
+                        callback(u.format("%s, you don't follow the channel! :(", user.username));
+                    }
                 });
                 break;
             default:
