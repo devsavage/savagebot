@@ -73,6 +73,7 @@ module.exports = {
                 });
                 break;
             case "followage":
+            case "followsince":
                 api.stats(user.username, function(err, res) {
                     if(err)
                         throw err;
