@@ -61,16 +61,16 @@ client.on("join", function(channel, username) {
             }
         });
 
-        api.verified(user.username, function(err, res) {
+        api.verified(username, function(err, res) {
             if(err)
                 throw err;
 
             if(res.status == 200 && res.verified) {
-                db.addPoints(user.username, config.bot.settings.verifiedJoinBonus, function(err, results) {
+                db.addPoints(username, config.bot.settings.verifiedJoinBonus, function(err, results) {
                     if(err)
                         u.log(channel, "error", err, true);
                     else
-                        u.log(channel, "event", u.format("Gave %s points for connecting with savageboy74.tv.", user.username), true);
+                        u.log(channel, "event", u.format("Gave %s points for connecting with savageboy74.tv.", username), true);
                 });
             }
         });
