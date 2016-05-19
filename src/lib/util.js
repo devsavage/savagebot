@@ -83,10 +83,13 @@ var log = function(channel, type, message, outputToConsole = false) {
 }
 
 var getTime = function getTime() {
-    var str         = '';
-
     var currentTime = new Date();
 
+    var str         = '';
+
+    var month       = currentTime.getUTCMonth() + 1;
+    var day         = currentTime.getUTCDate();
+    var year         = currentTime.getUTCFullYear();
     var hours       = currentTime.getHours();
     var minutes     = currentTime.getMinutes();
     var ampm = hours >= 12 ? "PM" : "AM";
@@ -96,7 +99,7 @@ var getTime = function getTime() {
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    str += hours + ":" + minutes + ampm;
+    str += month + "/" + day + "/" + year + " " + hours + ":" + minutes + ampm;
 
     return str;
 }
@@ -213,11 +216,22 @@ var getFollowAge = function getFollowAge(username, followDate) {
     return username + ", you have been following for " + returnString + "!";
 }
 
+var isValidJson = function isValidJson(string) {
+    try {
+        JSON.parse(string);
+    } catch (e) {
+        return false;
+    }
+
+    return true;
+}
+
 module.exports = {
     inArray: inArray,
     isBlacklisted: isBlacklisted,
     log: log,
     format: format,
     isMod: isMod,
-    getFollowAge: getFollowAge
+    getFollowAge: getFollowAge,
+    isValidJson: isValidJson
 };

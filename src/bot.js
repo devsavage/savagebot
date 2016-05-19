@@ -41,8 +41,10 @@ client.on("connected", function(address, port) {
 client.on("join", function(channel, username) {
     if(config.bot.settings.allowJoinPoints && !u.isBlacklisted(username)) {
         api.stats(username, function(err, res) {
-            if(err)
-                console.log(err);
+            if(err) {
+                u.log("error", err, true);
+                throw err;
+            }
 
             if(res.data.follow_date == null) {
                 db.addPoints(username, config.bot.settings.joinPoints, function(err, results) {
@@ -62,10 +64,12 @@ client.on("join", function(channel, username) {
         });
 
         api.verified(username, function(err, res) {
-            if(err)
+            if(err) {
+                u.log(null, "error", err, true);
                 throw err;
+            }
 
-            if(res.status == 200 && res.verified) {
+            if(res.verified) {
                 db.addPoints(username, config.bot.settings.verifiedJoinBonus, function(err, results) {
                     if(err)
                         u.log(channel, "error", err, true);
@@ -82,6 +86,11 @@ client.on("join", function(channel, username) {
 client.on("chat", function (channel, user, message, self) {
     if(config.bot.settings.allowChatPoints && !u.isBlacklisted(user.username)) {
         api.stats(user.username, function(err, res) {
+            if(err) {
+                u.log(null, "error", err, true);
+                throw err;
+            }
+
             if(res.data.follow_date == null) {
                 db.addPoints(user.username, config.bot.settings.chatPoints, function(err, results) {
                     if(err)
@@ -101,10 +110,12 @@ client.on("chat", function (channel, user, message, self) {
     }
 
     api.verified(user.username, function(err, res) {
-        if(err)
+        if(err) {
+            u.log(null, "error", err, true);
             throw err;
+        }
 
-        if(res.status == 200 && res.verified && !u.isBlacklisted(user.username)) {
+        if(res.verified && !u.isBlacklisted(user.username)) {
             db.addPoints(user.username, config.bot.settings.verifiedChatBonus, function(err, results) {
                 if(err)
                     u.log(channel, "error", err, true);
