@@ -42,7 +42,7 @@ client.on("join", function(channel, username) {
     if(config.bot.settings.allowJoinPoints && !u.isBlacklisted(username)) {
         api.stats(username, function(err, res) {
             if(err) {
-                u.log("error", err, true);
+                u.log(null, "error", err, true);
                 throw err;
             }
 
