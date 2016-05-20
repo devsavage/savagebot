@@ -10,7 +10,7 @@ var isMod = function(user) {
         return true;
     else
         return false;
-}
+};
 
 var format = function(f) {
     var formatRegExp = /%[sdj%]/g;
@@ -49,19 +49,19 @@ var format = function(f) {
         }
     }
     return str;
-}
+};
 
 var isString = function isString(arg) {
     return typeof arg === 'string';
-}
+};
 
 var inArray = function(value, array) {
     return _.contains(array, value);
-}
+};
 
 var isBlacklisted = function(username) {
     return inArray(username, config.bot.settings.blacklist);
-}
+};
 
 var log = function(channel, type, message, outputToConsole = false) {
     if(channel !== null) {
@@ -80,7 +80,7 @@ var log = function(channel, type, message, outputToConsole = false) {
         else
             console.log("[%s] [%s] %s", getTime(), type.toUpperCase(), message);
     }
-}
+};
 
 var getTime = function getTime() {
     var currentTime = new Date();
@@ -102,7 +102,7 @@ var getTime = function getTime() {
     str += month + "/" + day + "/" + year + " " + hours + ":" + minutes + ampm;
 
     return str;
-}
+};
 
 var getFollowAge = function getFollowAge(username, followDate) {
     var toDate = new Date();
@@ -214,17 +214,17 @@ var getFollowAge = function getFollowAge(username, followDate) {
             returnString = langFn("date.future",[returnString]);
     }
     return username + ", you have been following for " + returnString + "!";
-}
+};
 
 var isValidJson = function isValidJson(string) {
-    try {
-        JSON.parse(string);
-    } catch (e) {
-        return false;
-    }
-
-    return true;
-}
+	try {
+		JSON.parse(string);
+	} catch(err) {
+		return false
+	}
+	
+	return true;
+};
 
 module.exports = {
     inArray: inArray,
