@@ -8,29 +8,34 @@ var raffle = {
 };
 
 var startRaffle = function (time = null, callback) {
-    if(time != null) {
-        if(time.toString().length == 2) {
-            time = time * 1000;
+    if(!raffle.active) {
+        if(time != null) {
+            if(time.toString().length == 2) {
+                time = time * 1000;
+            }
+
+    		if(time > 300000) {
+    			callback("You are trying to create a raffle for more than 5 minutes! That's not cool!");
+    		} else {
+    			raffle.time = time;
+    		}
         }
 
-		if(time > 300000) {
-			callback("You are trying to create a raffle for more than 5 minutes! That's not cool!");
-		} else {
-			raffle.time = time;
-		}
+        raffle.active = true;
+
+        var raffleTime = convertTime(raffle.time);
+
+        callback(u.format("A raffle has begun! Type \"!join\" to enter! The raffile will end in %s!", raffleTime));
+
+        setTimeout(function() {
+            endRaffle(function(winningMessage) {
+                callback(winningMessage);
+            });
+        }, raffle.time);
+    } else {
+        var raffleTime = convertTime(raffle.time);
+        callback(u.format("A raffle has already been started! Type \"!join\" to enter! The raffile will end in %s!", raffleTime));
     }
-
-    raffle.active = true;
-
-    var raffleTime = convertTime(raffle.time);
-
-    callback(u.format("A raffle has begun! Type \"!join\" to enter! The raffile will end in %s!", raffleTime));
-
-    setTimeout(function() {
-        endRaffle(function(winningMessage) {
-            callback(winningMessage);
-        });
-    }, raffle.time);
 };
 
 var addUserToRaffle = function(username, callback) {
@@ -63,7 +68,7 @@ var endRaffle = function(callback) {
             if(raffle.users.length > 0) {
                 callback(u.format("The raffle has ended! And the winner is.... !!! %s !!! Congratulations! FeelsGoodMan", raffle.users[Math.floor(Math.random() * raffle.users.length)]));
             } else {
-                callback("Nobody won the raffle because no one entered! FeelsBadMan");
+                callback("Nobody won the raffle because nobody entered! FeelsBadMan");
             }
 
             raffle.active = false;

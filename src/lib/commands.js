@@ -3,6 +3,7 @@ var db = require("./database.js");
 var raffle = require("./raffle.js");
 var u = require("./util.js");
 var api = require('./api.js');
+var numbro = require('numbro');
 
 module.exports = {
     handleMessage: function(channel, user, message, callback) {
@@ -27,7 +28,7 @@ module.exports = {
                                         if(results != null) {
                                             db.getPoints(username, function(error, res) {
                                                 if(res != null)
-                                                    callback(u.format("%s now has %s points.", username, res));
+                                                    callback(u.format("%s now has %s points.", username, numbro(res).format('0,0')));
                                             });
                                         }
                                     });
@@ -48,7 +49,7 @@ module.exports = {
                 } else {
                     db.getPoints(user.username, function(err, res) {
                         if(res != null)
-                            callback(u.format("%s, you have %s points.", user.username, res));
+                            callback(u.format("%s, you have %s points.", user.username, numbro(res).format('0,0')));
                         else {
                             callback(u.format("%s, you don't have any points!", user.username));
                         }
