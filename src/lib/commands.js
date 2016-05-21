@@ -24,12 +24,19 @@ module.exports = {
                                 var points = msg[2];
                                 var username = msg[3];
                                 if(u.isMod(user)) {
+                                    if(user.username == username) {
+                                        callback(u.format("%s forreal? OpieOP", user.username));
+                                        return;
+                                    }
+
                                     db.addPoints(username, points, function(err, results) {
                                         if(results != null) {
                                             db.getPoints(username, function(error, res) {
                                                 if(res != null)
                                                     callback(u.format("%s now has %s points.", username, numbro(res).format('0,0')));
                                             });
+                                        } else {
+                                            callback(u.format("%s who is %s? DansGame", user.username, username));
                                         }
                                     });
                                 }
@@ -38,9 +45,23 @@ module.exports = {
                             }
                             break;
                         case "remove":
-                            // Remove points from user if the sender is a moderator
-                            if(u.isMod(user)) {
-
+                            if(msg[2] != undefined && msg[3] != undefined) {
+                                var points = msg[2];
+                                var username = msg[3];
+                                if(u.isMod(user)) {
+                                    db.removePoints(username, points, function(err, results) {
+                                        if(results != null) {
+                                            db.getPoints(username, function(error, res) {
+                                                if(res != null)
+                                                    callback(u.format("%s now has %s points.", username, numbro(res).format('0,0')));
+                                            });
+                                        } else {
+                                            callback(u.format("%s who is %s? DansGame", user.username, username));
+                                        }
+                                    });
+                                }
+                            } else {
+                                callback("Incorrect syntax! Use: !points remove <amount> <username>");
                             }
                             break;
                         default:

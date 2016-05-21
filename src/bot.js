@@ -126,8 +126,11 @@ client.on("chat", function (channel, user, message, self) {
     });
 
     c.handleMessage(channel, user, message, function(response) {
-        if(response != undefined)
-            client.say(channel, response);
+        if(response != undefined) {
+            setTimeout(function() {
+                client.say(channel, response);
+            }, 2000); 
+        }
     });
 
     u.log(channel, "chat", "<" + user.username + ">: " + message, true);
