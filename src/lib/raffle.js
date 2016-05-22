@@ -48,17 +48,13 @@ var addUserToRaffle = function(username, callback) {
                     if(!err) {
                       // We limit telling users they joined the raffle if there are more than 20 viewers at a time.
                         if(res.viewers <= 20) {
-                            setTimeout(function() {
-                                callback(u.format("%s, you have entered the raffle!", username));
-                            }, 1000);
+                          callback(u.format("%s, you have entered the raffle!", username));
                         }
                     }
                 });
             }
         } else {
-            setTimeout(function() {
-                callback(u.format("%s, there is no active raffle to join!", username));
-            }, 2000);
+          callback(u.format("%s, there is no active raffle to join!", username));
         }
     });
 };
