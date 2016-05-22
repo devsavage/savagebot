@@ -125,11 +125,15 @@ client.on("chat", function (channel, user, message, self) {
         }
     });
 
-    c.handleMessage(channel, user, message, function(response) {
+    c.handleMessage(channel, user, message, function(response, shouldWait = true) {
         if(response != undefined) {
+          if(shouldWait) {
             setTimeout(function() {
                 client.say(channel, response);
-            }, 2000);
+            }, config.bot.settings.commands.responseTime);
+          } else {
+            client.say(channel, response);
+          }
         }
     });
 

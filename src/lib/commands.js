@@ -84,7 +84,7 @@ module.exports = {
                     var time = msg[1] || 30000;
                     raffle.startRaffle(time, function(message) {
                         if(message != null) {
-                            callback(message);
+                            callback(message, false);
                             u.log(channel, "event", u.format("A raffle was started by %s!", user.username), true);
                         }
                     });
