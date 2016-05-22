@@ -129,7 +129,7 @@ client.on("chat", function (channel, user, message, self) {
         if(response != undefined) {
             setTimeout(function() {
                 client.say(channel, response);
-            }, 2000); 
+            }, 2000);
         }
     });
 

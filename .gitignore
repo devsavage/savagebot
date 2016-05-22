@@ -4,3 +4,4 @@ data/
 t.txt
 src/tests.js
 *.log
+.DS_Store

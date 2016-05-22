@@ -4,13 +4,15 @@ var raffle = require("./raffle.js");
 var u = require("./util.js");
 var api = require('./api.js');
 var numbro = require('numbro');
+var env = require("../../config/environment.json");
+var config = require("../../config/" + env.type + ".json");
 
 module.exports = {
     handleMessage: function(channel, user, message, callback) {
         var msg = message.split(" ");
         var option = null;
         var command = S(msg[0]).chompLeft("!").s.toLowerCase();
-        var validOptions = ["add", "remove"];
+        var validOptions = config.bot.settings.commands.validPointCommands;
 
         if(msg[1] != undefined)
             option = msg[1].toLowerCase();
@@ -83,7 +85,7 @@ module.exports = {
                     raffle.startRaffle(time, function(message) {
                         if(message != null) {
                             callback(message);
-                            u.log(channel, "event", u.format("A raffle was started by %s", user.username), true);
+                            u.log(channel, "event", u.format("A raffle was started by %s!", user.username), true);
                         }
                     });
                 }

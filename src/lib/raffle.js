@@ -14,11 +14,11 @@ var startRaffle = function (time = null, callback) {
                 time = time * 1000;
             }
 
-    		if(time > 300000) {
-    			callback("You are trying to create a raffle for more than 5 minutes! That's not cool!");
-    		} else {
-    			raffle.time = time;
-    		}
+      		if(time > 300000) {
+      			callback("Raffle duration must be 5 minutes or less!");
+      		} else {
+      			raffle.time = time;
+      		}
         }
 
         raffle.active = true;
@@ -33,8 +33,8 @@ var startRaffle = function (time = null, callback) {
             });
         }, raffle.time);
     } else {
-        var raffleTime = convertTime(raffle.time);
-        callback(u.format("A raffle has already been started! Type \"!join\" to enter! The raffile will end in %s!", raffleTime));
+        //We don't need to add time remaining since it's not really the "time remaining".
+        callback("A raffle has already been started! Type \"!join\" to enter!");
     }
 };
 
@@ -46,6 +46,7 @@ var addUserToRaffle = function(username, callback) {
 
                 api.viewers(function(err, res) {
                     if(!err) {
+                      // We limit telling users they joined the raffle if there are more than 20 viewers at a time.
                         if(res.viewers <= 20) {
                             setTimeout(function() {
                                 callback(u.format("%s, you have entered the raffle!", username));
