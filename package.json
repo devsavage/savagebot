@@ -1,6 +1,6 @@
 {
   "name": "savagebot",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "A Twitch chat bot with various features.",
   "main": "src/bot.js",
   "scripts": {

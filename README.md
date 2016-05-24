@@ -26,6 +26,7 @@ The config file you see me reference in some files...
 
         "settings": {
             "debug": false,
+            "allowLogging": true,
             "cluster": "aws",
             "blacklist": ["savagebot", "nightbot", "moobot", "xanbot"],
             "allowJoinPoints": true,
