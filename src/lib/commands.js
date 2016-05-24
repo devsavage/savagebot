@@ -117,7 +117,7 @@ module.exports = {
 		break;
             case "version":
                 if(u.removeHash(user.username) === u.removeHash(channel)) {
-                    callback(u.format("%s is currently running on v%s.", config.bot.username, config.bot.version));
+                    callback(u.format("%s is currently running v%s.", config.bot.username, config.bot.version));
                 }
                 break;
             default:
