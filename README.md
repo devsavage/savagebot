@@ -37,7 +37,8 @@ The config file you see me reference in some files...
             "chatPoints": 1,
             "followerChatBonus": 2,
             "commands": {
-                "validPointCommands": ["add", "remove"]
+                "validPointCommands": ["add", "remove"],
+                "responseTime": 2000
             }
         }
     },
