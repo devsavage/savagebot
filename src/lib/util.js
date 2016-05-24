@@ -8,7 +8,7 @@ var logFile = "./data/log.txt";
 
 module.exports = {
     isMod: function isMod(user) {
-        if(user["user-type"] != undefined && user["user-type"] === "broadcaster")
+        if(user["user-type"] != undefined && user["user-type"] === "mod")
             return true;
         else
             return false;
