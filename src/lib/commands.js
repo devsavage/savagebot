@@ -72,9 +72,9 @@ module.exports = {
                 } else {
                     db.getPoints(user.username, function(err, res) {
                         if(res != null)
-                            callback(u.format("%s, you have %s points.", user.username, numbro(res).format('0,0')));
+                            callback(u.format("%s, you have %s points! PogChamp", user.username, numbro(res).format('0,0')));
                         else {
-                            callback(u.format("%s, you don't have any points!", user.username));
+                            callback(u.format("%s, you don't have any points! DansGame", user.username));
                         }
                     });
                 }
@@ -109,6 +109,15 @@ module.exports = {
                         callback(u.format("%s, you don't follow the channel! :(", user.username));
                     }
                 });
+                break;
+            case "ping":
+                if(u.removeHash(user.username) === u.removeHash(channel)) {
+                    callback("PONG");
+                }
+            case "version":
+                if(u.removeHash(user.username) === u.removeHash(channel)) {
+                    callback(u.format("%s is currently running on v%s.", config.bot.username, config.bot.version));
+                }
                 break;
             default:
                 break;

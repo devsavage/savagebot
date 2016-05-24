@@ -2,7 +2,7 @@ Savagebot
 =========
 
 Wow another rewrite? Yeah, lol. This time I won't be trying to make another "moderation" bot but just build on them with some more features aside from moderation.  
-Oh yeah, I am also using ES6 so you will need to know how to use babel :)  
+This project requires node >= 6.0  
 
 **Features:**
 
@@ -16,8 +16,9 @@ The config file you see me reference in some files...
 ~~~ json
 {
     "bot": {
+        "version": "5.1.0",
         "username": "savagebot",
-        "oauth": "oauth:******************************",
+        "oauth": "oauth:******************************",",
         "defaults": {
             "channel": "default_channel",
             "group": "default_group_channel"
@@ -25,14 +26,19 @@ The config file you see me reference in some files...
 
         "settings": {
             "debug": false,
-            "cluster": "main",
+            "cluster": "aws",
             "blacklist": ["savagebot", "nightbot", "moobot", "xanbot"],
             "allowJoinPoints": true,
-            "joinPoints": 3,
+            "joinPoints": 2,
             "followerJoinBonus": 2,
+            "verifiedChatBonus": 2,
+            "verifiedJoinBonus": 2,
             "allowChatPoints": true,
             "chatPoints": 1,
-            "followerChatBonus": 2
+            "followerChatBonus": 2,
+            "commands": {
+                "validPointCommands": ["add", "remove"]
+            }
         }
     },
 
