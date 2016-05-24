@@ -114,6 +114,7 @@ module.exports = {
                 if(u.removeHash(user.username) === u.removeHash(channel)) {
                     callback("PONG");
                 }
+		break;
             case "version":
                 if(u.removeHash(user.username) === u.removeHash(channel)) {
                     callback(u.format("%s is currently running on v%s.", config.bot.username, config.bot.version));
