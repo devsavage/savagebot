@@ -84,31 +84,6 @@ client.on("join", function(channel, username) {
 });
 
 client.on("chat", function (channel, user, message, self) {
-    if(config.bot.settings.allowChatPoints && !u.isBlacklisted(user.username)) {
-        api.stats(user.username, function(err, res) {
-            if(err) {
-                u.log(null, "error", err, true);
-                throw err;
-            }
-
-            if(res.data.follow_date == null) {
-                db.addPoints(user.username, config.bot.settings.chatPoints, function(err, results) {
-                    if(err)
-                        u.log(channel, "error", err, true);
-                    else
-                        u.log(channel, "event", u.format("Gave %s points for chatting.", user.username), true);
-                });
-            } else {
-                db.addPoints(user.username, config.bot.settings.chatPoints * config.bot.settings.followerChatBonus, function(err, results) {
-                    if(err)
-                        u.log(channel, "error", err, true);
-                    else
-                        u.log(channel, "event", u.format("Gave %s points for chatting plus extra for being a follower.", user.username), true);
-                });
-            }
-        });
-    }
-
     api.verified(user.username, function(err, res) {
         if(err) {
             u.log(null, "error", err, true);
@@ -125,8 +100,8 @@ client.on("chat", function (channel, user, message, self) {
         }
     });
 
-    c.handleMessage(channel, user, message, function(response, shouldWait = true) {
-        if(response != undefined) {
+    c.handleMessage(channel, user, message, function(response, shouldWait = true, allowPoints = true) {
+        if(response != undefined || response != null) {
           if(shouldWait) {
             setTimeout(function() {
                 client.say(channel, response);
@@ -134,6 +109,33 @@ client.on("chat", function (channel, user, message, self) {
           } else {
             client.say(channel, response);
           }
+        }
+
+        if(allowPoints) {
+            if(config.bot.settings.allowChatPoints && !u.isBlacklisted(user.username)) {
+                api.stats(user.username, function(err, res) {
+                    if(err) {
+                        u.log(null, "error", err, true);
+                        throw err;
+                    }
+
+                    if(res.data.follow_date == null) {
+                        db.addPoints(user.username, config.bot.settings.chatPoints, function(err, results) {
+                            if(err)
+                                u.log(channel, "error", err, true);
+                            else
+                                u.log(channel, "event", u.format("Gave %s points for chatting.", user.username), true);
+                        });
+                    } else {
+                        db.addPoints(user.username, config.bot.settings.chatPoints * config.bot.settings.followerChatBonus, function(err, results) {
+                            if(err)
+                                u.log(channel, "error", err, true);
+                            else
+                                u.log(channel, "event", u.format("Gave %s points for chatting plus extra for being a follower.", user.username), true);
+                        });
+                    }
+                });
+            }
         }
     });
 

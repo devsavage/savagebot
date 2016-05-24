@@ -35,15 +35,15 @@ module.exports = {
                                         if(results != null) {
                                             db.getPoints(username, function(error, res) {
                                                 if(res != null)
-                                                    callback(u.format("%s now has %s points.", username, numbro(res).format('0,0')));
+                                                    callback(u.format("%s now has %s points.", username, numbro(res).format('0,0')), false, false);
                                             });
                                         } else {
-                                            callback(u.format("%s who is %s? DansGame", user.username, username));
+                                            callback(u.format("%s who is %s? DansGame", user.username, username), false, false);
                                         }
                                     });
                                 }
                             } else {
-                                callback("Incorrect syntax! Use: !points add <amount> <username>");
+                                callback("Incorrect syntax! Use: !points add <amount> <username>", false, false);
                             }
                             break;
                         case "remove":
@@ -55,15 +55,15 @@ module.exports = {
                                         if(results != null) {
                                             db.getPoints(username, function(error, res) {
                                                 if(res != null)
-                                                    callback(u.format("%s now has %s points.", username, numbro(res).format('0,0')));
+                                                    callback(u.format("%s now has %s points.", username, numbro(res).format('0,0')), false, false);
                                             });
                                         } else {
-                                            callback(u.format("%s who is %s? DansGame", user.username, username));
+                                            callback(u.format("%s who is %s? DansGame", user.username, username), false, false);
                                         }
                                     });
                                 }
                             } else {
-                                callback("Incorrect syntax! Use: !points remove <amount> <username>");
+                                callback("Incorrect syntax! Use: !points remove <amount> <username>", false, false);
                             }
                             break;
                         default:
@@ -72,9 +72,9 @@ module.exports = {
                 } else {
                     db.getPoints(user.username, function(err, res) {
                         if(res != null)
-                            callback(u.format("%s, you have %s points! PogChamp", user.username, numbro(res).format('0,0')));
+                            callback(u.format("%s, you have %s points! PogChamp", user.username, numbro(res).format('0,0')), true, false);
                         else {
-                            callback(u.format("%s, you don't have any points! DansGame", user.username));
+                            callback(u.format("%s, you don't have any points! DansGame", user.username), true, false);
                         }
                     });
                 }
@@ -103,7 +103,6 @@ module.exports = {
                         throw err;
 
                     if(res.status == 200 && res.data.follow_date != null) {
-                        console.log(res.data.follow_date);
                         callback(u.format("%s", u.getFollowAge(user.username, res.data.follow_date)));
                     } else if(res.data.follow_date == null) {
                         callback(u.format("%s, you don't follow the channel! :(", user.username));
@@ -121,6 +120,8 @@ module.exports = {
                 }
                 break;
             default:
+                // We respond with null so we can handle giving the user points.
+                callback(null);
                 break;
         }
     },

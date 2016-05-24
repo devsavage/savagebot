@@ -70,21 +70,23 @@ module.exports = {
     },
 
     log: function(channel, type, message, outputToConsole = false) {
-        if(channel !== null) {
-            fs.appendFile(logFile, "[" + this.getTime() + "] " + "[" + channel.toString() + "]" + " [" + type.toString().toUpperCase() +"] " + message.toString() + "\n", function(err) {
-                if (err) throw err;
-            });
-        } else {
-            fs.appendFile(logFile, "[" + this.getTime() + "] " + " [" + type.toString().toUpperCase() +"] " + message.toString() + "\n", function(err) {
-                if (err) throw err;
-            });
-        }
+        if(config.bot.settings.allowLogging) {
+            if(channel !== null) {
+                fs.appendFile(logFile, "[" + this.getTime() + "] " + "[" + channel.toString() + "]" + " [" + type.toString().toUpperCase() +"] " + message.toString() + "\n", function(err) {
+                    if (err) throw err;
+                });
+            } else {
+                fs.appendFile(logFile, "[" + this.getTime() + "] " + " [" + type.toString().toUpperCase() +"] " + message.toString() + "\n", function(err) {
+                    if (err) throw err;
+                });
+            }
 
-        if(outputToConsole) {
-            if(channel)
-                console.log("[%s] [%s] [%s] %s", this.getTime(), channel, type.toUpperCase(), message);
-            else
-                console.log("[%s] [%s] %s", this.getTime(), type.toUpperCase(), message);
+            if(outputToConsole) {
+                if(channel)
+                    console.log("[%s] [%s] [%s] %s", this.getTime(), channel, type.toUpperCase(), message);
+                else
+                    console.log("[%s] [%s] %s", this.getTime(), type.toUpperCase(), message);
+            }
         }
     },
 
