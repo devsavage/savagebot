@@ -18,7 +18,7 @@ The config file you see me reference in some files...
     "bot": {
         "version": "5.1.0",
         "username": "savagebot",
-        "oauth": "oauth:******************************",",
+        "oauth": "oauth:******************************",
         "defaults": {
             "channel": "default_channel",
             "group": "default_group_channel"
