@@ -8,6 +8,7 @@ var db = require('./lib/database.js');
 var u = require('./lib/util.js');
 var env = require("../config/environment.json");
 var config = require("../config/" + env.type + ".json");
+var internal = require('./lib/internal.js');
 
 var options = {
     options: {
@@ -35,6 +36,14 @@ client.on("connecting", function (address, port) {
 });
 
 client.on("connected", function(address, port) {
+    internal.online(function(err, res) {
+        if(res != null) {
+            u.log(null, "console", "Updated API Status To Online", true);
+        } else {
+            u.log(null, "console", "Error Updating API Status To Online", true);
+        }
+    });
+
     u.log(null, "console", "Connected To: " + address + ":" + port, true);
 });
 
@@ -43,6 +52,13 @@ client.on("join", function(channel, username) {
         api.stats(username, function(err, res) {
             if(err) {
                 u.log(null, "error", err, true);
+                internal.offline(function(err, res) {
+                    if(res != null) {
+                        u.log(null, "console", "Updated API Status To Offline", true);
+                    } else {
+                        u.log(null, "console", "Error Updating API Status To Offline", true);
+                    }
+                });
                 throw err;
             }
 
@@ -66,6 +82,13 @@ client.on("join", function(channel, username) {
         api.verified(username, function(err, res) {
             if(err) {
                 u.log(null, "error", err, true);
+                internal.offline(function(err, res) {
+                    if(res != null) {
+                        u.log(null, "console", "Updated API Status To Offline", true);
+                    } else {
+                        u.log(null, "console", "Error Updating API Status To Offline", true);
+                    }
+                });
                 throw err;
             }
 
@@ -87,6 +110,13 @@ client.on("chat", function (channel, user, message, self) {
     api.verified(user.username, function(err, res) {
         if(err) {
             u.log(null, "error", err, true);
+            internal.offline(function(err, res) {
+                if(res != null) {
+                    u.log(null, "console", "Updated API Status To Offline", true);
+                } else {
+                    u.log(null, "console", "Error Updating API Status To Offline", true);
+                }
+            });
             throw err;
         }
 
@@ -116,6 +146,13 @@ client.on("chat", function (channel, user, message, self) {
                 api.stats(user.username, function(err, res) {
                     if(err) {
                         u.log(null, "error", err, true);
+                        internal.offline(function(err, res) {
+                            if(res != null) {
+                                u.log(null, "console", "Updated API Status To Offline", true);
+                            } else {
+                                u.log(null, "console", "Error Updating API Status To Offline", true);
+                            }
+                        });
                         throw err;
                     }
 
@@ -143,5 +180,13 @@ client.on("chat", function (channel, user, message, self) {
 });
 
 client.on("disconnected", function (reason) {
+    internal.offline(function(err, res) {
+        if(res != null) {
+            u.log(null, "console", "Updated API Status To Offline", true);
+        } else {
+            u.log(null, "console", "Error Updating API Status To Offline", true);
+        }
+    });
+
     u.log(null, "console", "Disconnected: " + reason, true);
 });

@@ -5,3 +5,4 @@ t.txt
 src/tests.js
 *.log
 .DS_Store
+src/lib/internal.js
