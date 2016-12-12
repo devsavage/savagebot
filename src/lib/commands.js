@@ -8,7 +8,7 @@ var env = require("../../config/environment.json");
 var config = require("../../config/" + env.type + ".json");
 
 module.exports = {
-    handleMessage: function(channel, user, message, callback) {
+    handleMessage: function(client, channel, user, message, callback) {
         var msg = message.split(" ");
         var option = null;
         var command = S(msg[0]).chompLeft("!").s.toLowerCase();
@@ -113,7 +113,7 @@ module.exports = {
                 if(u.removeHash(user.username) === u.removeHash(channel)) {
                     callback("PONG", false, false);
                 }
-		break;
+                break;
             case "version":
                 if(u.removeHash(user.username) === u.removeHash(channel)) {
                     callback(u.format("%s is currently running v%s.", config.bot.username, config.bot.version), false, false);

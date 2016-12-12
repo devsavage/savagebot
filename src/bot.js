@@ -35,18 +35,6 @@ client.on("connecting", function (address, port) {
     u.log(null, "console", "Connecting To: " + address + ":" + port, true);
 });
 
-client.on("connected", function(address, port) {
-    internal.online(function(err, res) {
-        if(res != null) {
-            u.log(null, "console", "Updated API Status To Online", true);
-        } else {
-            u.log(null, "console", "Error Updating API Status To Online", true);
-        }
-    });
-
-    u.log(null, "console", "Connected To: " + address + ":" + port, true);
-});
-
 client.on("join", function(channel, username) {
     if(config.bot.settings.allowJoinPoints && !u.isBlacklisted(username)) {
         api.stats(username, function(err, res) {
@@ -107,30 +95,11 @@ client.on("join", function(channel, username) {
 });
 
 client.on("chat", function (channel, user, message, self) {
-    api.verified(user.username, function(err, res) {
-        if(err) {
-            u.log(null, "error", err, true);
-            internal.offline(function(err, res) {
-                if(res != null) {
-                    u.log(null, "console", "Updated API Status To Offline", true);
-                } else {
-                    u.log(null, "console", "Error Updating API Status To Offline", true);
-                }
-            });
-            throw err;
-        }
+    if(self) {
+        return false;
+    }
 
-        if(res.verified && !u.isBlacklisted(user.username)) {
-            db.addPoints(user.username, config.bot.settings.verifiedChatBonus, function(err, results) {
-                if(err)
-                    u.log(channel, "error", err, true);
-                else
-                    u.log(channel, "event", u.format("Gave %s points for connecting with savageboy74.tv.", user.username), true);
-            });
-        }
-    });
-
-    c.handleMessage(channel, user, message, function(response, shouldWait = true, allowPoints = true) {
+    c.handleMessage(client, channel, user, message, function(response, shouldWait = true, allowPoints = true) {
         if(response != undefined || response != null) {
           if(shouldWait) {
             setTimeout(function() {
@@ -142,6 +111,29 @@ client.on("chat", function (channel, user, message, self) {
         }
 
         if(allowPoints) {
+            api.verified(user.username, function(err, res) {
+                if(err) {
+                    u.log(null, "error", err, true);
+                    internal.offline(function(err, res) {
+                        if(res != null) {
+                            u.log(null, "console", "Updated API Status To Offline", true);
+                        } else {
+                            u.log(null, "console", "Error Updating API Status To Offline", true);
+                        }
+                    });
+                    throw err;
+                }
+
+                if(res.verified && !u.isBlacklisted(user.username)) {
+                    db.addPoints(user.username, config.bot.settings.verifiedChatBonus, function(err, results) {
+                        if(err)
+                            u.log(channel, "error", err, true);
+                        else
+                            u.log(channel, "event", u.format("Gave %s points for connecting with savageboy74.tv.", user.username), true);
+                    });
+                }
+            });
+
             if(config.bot.settings.allowChatPoints && !u.isBlacklisted(user.username)) {
                 api.stats(user.username, function(err, res) {
                     if(err) {
@@ -189,4 +181,30 @@ client.on("disconnected", function (reason) {
     });
 
     u.log(null, "console", "Disconnected: " + reason, true);
+});
+
+client.on("join", function (channel, username, self) {
+    if(self) {
+        u.log(null, "console", "Joined Channel: " + channel, true);
+        internal.online(function(err, res) {
+            if(res != null) {
+                u.log(null, "console", "Updated API Status To Online", true);
+            } else {
+                u.log(null, "console", "Error Updating API Status To Online", true);
+            }
+        });
+    }
+});
+
+client.on("part", function(channel, username, self) {
+    if(self) {
+        u.log(null, "console", "Parted Channel: " + channel, true);
+        internal.offline(function(err, res) {
+            if(res != null) {
+                u.log(null, "console", "Updated API Status To Offline", true);
+            } else {
+                u.log(null, "console", "Error Updating API Status To Offline", true);
+            }
+        });
+    }
 });

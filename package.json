@@ -1,6 +1,6 @@
 {
   "name": "savagebot",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "description": "A Twitch chat bot with various features.",
   "main": "src/bot.js",
   "scripts": {
@@ -20,13 +20,14 @@
   },
   "homepage": "https://github.com/savageboy74/savagebot#readme",
   "dependencies": {
+    "chokidar": "^1.5.1",
     "mysql": "^2.10.2",
+    "node-datetime": "^1.0.0",
     "numbro": "^1.7.1",
     "request": "^2.69.0",
     "string": "^3.3.1",
-    "tmi.js": "^0.0.29",
+    "tmi.js": "^1.1.2",
     "underscore": "^1.8.3",
-    "node-datetime": "^1.0.0",
-	"chokidar": "^1.5.1"
+    "underscore.string": "^3.3.4"
   }
 }
