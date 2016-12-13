@@ -96,6 +96,19 @@ client.on("join", function(channel, username) {
 
 client.on("chat", function (channel, user, message, self) {
     if(self) {
+        internal.isOffline(function(status) {
+            if(status == true) {
+                u.log(null, "console", "API status says I'm offline. Changing that now...", true);
+                internal.online(function(err, res) {
+                    if(res != null) {
+                        u.log(null, "console", "Updated API Status To Online", true);
+                    } else {
+                        u.log(null, "console", "Error Updating API Status To Online", true);
+                    }
+                });
+            }
+        });
+
         return false;
     }
 
